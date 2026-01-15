@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-gym-mgmt-dev-key-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'gym-management-member-workout-system-d77d.onrender.com',
+    '*',
+]
 
 
 # Application definition
