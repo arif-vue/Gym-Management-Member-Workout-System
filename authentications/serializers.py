@@ -1,15 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
-from .models import CustomUser, GymBranch
+from branches.models import GymBranch
+from branches.serializers import GymBranchSerializer
 
 User = get_user_model()
-
-
-class GymBranchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GymBranch
-        fields = ['id', 'name', 'location', 'created_at']
-        read_only_fields = ['id', 'created_at']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -44,7 +38,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         # Manager can only create trainer or member
         if user.role == 'manager' and value not in ['trainer', 'member']:
             raise serializers.ValidationError("Manager can only create trainers or members")
-        # Admin can create any role
         return value
 
     def validate(self, data):

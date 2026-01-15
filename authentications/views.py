@@ -5,14 +5,13 @@ from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
-from .models import CustomUser, GymBranch
+from .models import CustomUser
 from .serializers import (
     UserSerializer,
     UserCreateSerializer,
     LoginSerializer,
-    GymBranchSerializer,
 )
-from .permissions import IsAdmin, IsAdminOrManager
+from .permissions import IsAdminOrManager
 
 User = get_user_model()
 
@@ -74,25 +73,6 @@ def get_profile(request):
     return success_response(message="Profile retrieved successfully", data=serializer.data)
 
 
-# ==================== Gym Branch Management (Admin Only) ====================
-
-@api_view(['GET', 'POST'])
-@permission_classes([IsAdmin])
-def gym_branches(request):
-    if request.method == 'GET':
-        branches = GymBranch.objects.all()
-        paginator = StandardPagination()
-        page = paginator.paginate_queryset(branches, request)
-        serializer = GymBranchSerializer(page, many=True)
-        return paginator.get_paginated_response(serializer.data)
-
-    serializer = GymBranchSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return success_response(message="Gym branch created successfully", data=serializer.data, code=201)
-    return error_response(message="Validation failed", errors=serializer.errors)
-
-
 # ==================== User Management ====================
 
 @api_view(['GET', 'POST'])
@@ -103,7 +83,6 @@ def users(request):
         if user.role == 'admin':
             queryset = User.objects.select_related('gym_branch').all()
         else:
-            # Manager can only see users in their branch
             queryset = User.objects.select_related('gym_branch').filter(gym_branch=user.gym_branch)
         
         paginator = StandardPagination()
@@ -111,7 +90,6 @@ def users(request):
         serializer = UserSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-    # POST - Create user
     serializer = UserCreateSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         serializer.save()
