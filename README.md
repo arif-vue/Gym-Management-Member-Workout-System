@@ -18,10 +18,14 @@ A backend REST API for managing gym branches, trainers, members, and workout pla
 ## 🌐 Hosted API Base URL
 
 ```
-https://your-deployed-url.com/api/
+https://gym-management-member-workout-system-d77d.onrender.com/api/
 ```
 
-> Replace with your actual deployed URL (e.g., Heroku, Railway, Render, etc.)
+## 🔧 Django Admin Panel
+
+```
+https://gym-management-member-workout-system-d77d.onrender.com/admin/
+```
 
 ---
 

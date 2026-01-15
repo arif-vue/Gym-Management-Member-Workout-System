@@ -942,7 +942,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": ""
+			"value": "https://gym-management-member-workout-system-d77d.onrender.com/api/"
 		},
 		{
 			"key": "admin_token",
