@@ -85,17 +85,27 @@ class WorkoutTaskSerializer(serializers.ModelSerializer):
 
 
 class WorkoutTaskCreateSerializer(serializers.ModelSerializer):
-    workout_plan_id = serializers.PrimaryKeyRelatedField(
-        queryset=WorkoutPlan.objects.all(), source='workout_plan'
-    )
-    member_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.filter(role='member'), source='member'
-    )
+    workout_plan_id = serializers.IntegerField(write_only=True)
+    member_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = WorkoutTask
         fields = ['id', 'workout_plan_id', 'member_id', 'status', 'due_date']
         read_only_fields = ['id']
+
+    def validate_workout_plan_id(self, value):
+        try:
+            workout_plan = WorkoutPlan.objects.get(id=value)
+            return workout_plan
+        except WorkoutPlan.DoesNotExist:
+            raise serializers.ValidationError("Workout plan does not exist")
+
+    def validate_member_id(self, value):
+        try:
+            member = User.objects.get(id=value, role='member')
+            return member
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Member does not exist or is not a member")
 
     def validate(self, data):
         request = self.context.get('request')
@@ -103,8 +113,8 @@ class WorkoutTaskCreateSerializer(serializers.ModelSerializer):
             return data
         
         user = request.user
-        workout_plan = data.get('workout_plan')
-        member = data.get('member')
+        workout_plan = data.get('workout_plan_id')
+        member = data.get('member_id')
 
         # Admin can bypass restrictions
         if user.role == 'admin':
@@ -127,6 +137,13 @@ class WorkoutTaskCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"member_id": "Tasks can only be assigned to members"})
 
         return data
+
+    def create(self, validated_data):
+        workout_plan = validated_data.pop('workout_plan_id')
+        member = validated_data.pop('member_id')
+        validated_data['workout_plan'] = workout_plan
+        validated_data['member'] = member
+        return super().create(validated_data)
 
 
 class WorkoutTaskUpdateSerializer(serializers.ModelSerializer):
