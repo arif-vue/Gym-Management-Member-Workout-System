@@ -29,9 +29,11 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
 
 
 class WorkoutPlanCreateSerializer(serializers.ModelSerializer):
+    gym_branch_id = serializers.IntegerField(required=False, write_only=True)
+
     class Meta:
         model = WorkoutPlan
-        fields = ['id', 'title', 'description']
+        fields = ['id', 'title', 'description', 'gym_branch_id']
         read_only_fields = ['id']
 
     def validate(self, data):
@@ -40,17 +42,35 @@ class WorkoutPlanCreateSerializer(serializers.ModelSerializer):
             return data
         
         user = request.user
-        # Only trainers can create workout plans
-        if user.role != 'trainer' and user.role != 'admin':
+        # Only trainers and admin can create workout plans
+        if user.role not in ['trainer', 'admin']:
             raise serializers.ValidationError({"permission": "Only trainers can create workout plans"})
+        
+        # Admin must provide gym_branch_id
+        if user.role == 'admin':
+            if 'gym_branch_id' not in data:
+                raise serializers.ValidationError({"gym_branch_id": "Admin must specify a gym branch"})
+        else:
+            # Trainer must have a branch assigned
+            if not user.gym_branch:
+                raise serializers.ValidationError({"gym_branch": "You must be assigned to a branch to create workout plans"})
         
         return data
 
     def create(self, validated_data):
+        from branches.models import GymBranch
         request = self.context.get('request')
         user = request.user
         validated_data['created_by'] = user
-        validated_data['gym_branch'] = user.gym_branch
+        
+        # Admin uses provided gym_branch_id, trainer uses their own branch
+        if user.role == 'admin':
+            gym_branch_id = validated_data.pop('gym_branch_id')
+            validated_data['gym_branch'] = GymBranch.objects.get(id=gym_branch_id)
+        else:
+            validated_data.pop('gym_branch_id', None)
+            validated_data['gym_branch'] = user.gym_branch
+        
         return super().create(validated_data)
 
 
