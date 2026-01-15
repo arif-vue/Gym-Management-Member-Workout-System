@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # local apps
     'branches',
     'authentications',
+    'workouts',
 ]
 
 MIDDLEWARE = [
