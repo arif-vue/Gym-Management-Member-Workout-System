@@ -1,0 +1,964 @@
+{
+	"info": {
+		"_postman_id": "3c47fb1c-834d-4ffa-8e53-48f953dc2cfa",
+		"name": "Gym Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14943793",
+		"_collection_link": "https://arif-ai-1999.postman.co/workspace/arif-ai~0326622d-525f-44f7-96fb-f250d1c69432/collection/14943793-3c47fb1c-834d-4ffa-8e53-48f953dc2cfa?action=share&source=collection_link&creator=14943793"
+	},
+	"item": [
+		{
+			"name": "Authentications",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gym.com\",\n    \"password\": \"gym@7890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/login/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@gym.com\",\n    \"password\": \"admin123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}auth/login/",
+									"host": [
+										"{{url}}auth"
+									],
+									"path": [
+										"login",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 13:54:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "678"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTcxNjQ0LCJpYXQiOjE3Njg0ODUyNDQsImp0aSI6IjU2MTljYzQ4YzIwYzQ4ZTU5MWFlY2YxNTk5YjBiOTFmIiwidXNlcl9pZCI6IjEifQ.57KooHdwTbFyj6zqMi72WYuEeYedHXlKRcqMtdLbj_Q\",\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MTA3NzI0NCwiaWF0IjoxNzY4NDg1MjQ0LCJqdGkiOiJlYTE5ZDg1N2JmOGI0OTkwYWYzM2U0NTU5ZDI5ODBiZiIsInVzZXJfaWQiOiIxIn0.tO9cEcMh2LnCN2P8SLUZMoIi9ifukV_0R9hvsFWz92s\",\n    \"data\": {\n        \"id\": 1,\n        \"email\": \"admin@gym.com\",\n        \"role\": \"admin\",\n        \"gym_branch\": null,\n        \"is_active\": true,\n        \"created_at\": \"2026-01-15T13:06:09.333444Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \" \"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/refresh-token/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"refresh-token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}auth/profile/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Users(Admin/Manager)",
+			"item": [
+				{
+					"name": "Create Manager (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"manager@gym.com\",\n    \"password\": \"password123\",\n    \"role\": \"manager\",\n    \"gym_branch_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/users/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trainer (Admin or Manager)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc1NzkwLCJpYXQiOjE3Njg0ODkzOTAsImp0aSI6ImMzYWI1YWI1YmE2MDRjMzhiOGFhYTlkMzVlNjExN2Y4IiwidXNlcl9pZCI6IjEifQ.MyjmsBbnXTk12qckD1PkQLoBxniNRZPgdmvp9R4IyT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"trainer@gym.com\",\n    \"password\": \"gym@7890\",\n    \"role\": \"trainer\",\n    \"gym_branch_id\": 1\n}\n// Authorization: Bearer <admin_or_manager_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/users/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Member (Admin or Manager)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Authorization: Bearer <admin_or_manager_token>\n{\n    \"email\": \"member1@gym.com\",\n    \"password\": \"password123\",\n    \"role\": \"member\",\n    \"gym_branch_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/users/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Authorization: Bearer <admin_or_manager_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/users/",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Branches(Admin Only)",
+			"item": [
+				{
+					"name": "Create Branch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ad_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Downtown Fitness\",\n    \"location\": \"123 Main Street, New York\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}branches/",
+							"host": [
+								"{{url}}branches"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Branch",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Downtown Fitness\",\n    \"location\": \"123 Main Street, New York\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}branches/",
+									"host": [
+										"{{url}}branches"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 14:53:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST, GET"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "184"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Gym branch created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Downtown Fitness\",\n        \"location\": \"123 Main Street, New York\",\n        \"created_at\": \"2026-01-15T14:53:52.791227Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "List Branches",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTcxNjQ0LCJpYXQiOjE3Njg0ODUyNDQsImp0aSI6IjU2MTljYzQ4YzIwYzQ4ZTU5MWFlY2YxNTk5YjBiOTFmIiwidXNlcl9pZCI6IjEifQ.57KooHdwTbFyj6zqMi72WYuEeYedHXlKRcqMtdLbj_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}branches/",
+							"host": [
+								"{{url}}branches"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Branches",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}branches/",
+									"host": [
+										"{{url}}branches"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 14:54:16 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST, GET"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "168"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 1,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 1,\n            \"name\": \"Downtown Fitness\",\n            \"location\": \"123 Main Street, New York\",\n            \"created_at\": \"2026-01-15T14:53:52.791227Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Workout Plains(Trainer)",
+			"item": [
+				{
+					"name": "Create Workout Plan (Trainer Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc1ODcxLCJpYXQiOjE3Njg0ODk0NzEsImp0aSI6Ijg2MjY2ODRmM2NjYzQ0MjhhZDU5MmRlMmE4ODBmNmFkIiwidXNlcl9pZCI6IjYifQ.Th67MwP8N-MQ7fvs_Dcj9TB51Y0aclfr9JnUkLUjD_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Authorization: Bearer <trainer_token>\n{\n    \"title\": \"Strength Training\",\n    \"description\": \"4-week program\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}workouts/plans/",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"plans",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Workout Plan (Trainer Only)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// Authorization: Bearer <trainer_token>\n{\n    \"title\": \"Strength Training\",\n    \"description\": \"4-week program\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}workouts/plans/",
+									"host": [
+										"{{url}}workouts"
+									],
+									"path": [
+										"plans",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 15:14:27 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, GET, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "358"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Workout plan created successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"Strength Training\",\n        \"description\": \"4-week program\",\n        \"created_by\": {\n            \"id\": 6,\n            \"email\": \"trainer@gym.com\"\n        },\n        \"gym_branch\": {\n            \"id\": 1,\n            \"name\": \"Downtown Fitness\",\n            \"location\": \"123 Main Street, New York\",\n            \"created_at\": \"2026-01-15T14:53:52.791227Z\"\n        },\n        \"created_at\": \"2026-01-15T15:14:27.927706Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "List Workout Plans",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Authorization: Bearer <admin_or_manager_or_trainer_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}workouts/plans/",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"plans",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Workout Plans(pagination)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc1ODcxLCJpYXQiOjE3Njg0ODk0NzEsImp0aSI6Ijg2MjY2ODRmM2NjYzQ0MjhhZDU5MmRlMmE4ODBmNmFkIiwidXNlcl9pZCI6IjYifQ.Th67MwP8N-MQ7fvs_Dcj9TB51Y0aclfr9JnUkLUjD_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}workouts/plans/?page=1",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"plans",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Workout Plans(pagination)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}workouts/plans/?page=1",
+									"host": [
+										"{{url}}workouts"
+									],
+									"path": [
+										"plans",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 15:05:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, GET, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "340"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 1,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 1,\n            \"title\": \"Strength Training\",\n            \"description\": \"4-week program\",\n            \"created_by\": {\n                \"id\": 6,\n                \"email\": \"trainer@gym.com\"\n            },\n            \"gym_branch\": {\n                \"id\": 1,\n                \"name\": \"Downtown Fitness\",\n                \"location\": \"123 Main Street, New York\",\n                \"created_at\": \"2026-01-15T14:53:52.791227Z\"\n            },\n            \"created_at\": \"2026-01-15T15:05:20.339543Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Workout Tasks",
+			"item": [
+				{
+					"name": "Assign Task to Member (Trainer Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc1ODcxLCJpYXQiOjE3Njg0ODk0NzEsImp0aSI6Ijg2MjY2ODRmM2NjYzQ0MjhhZDU5MmRlMmE4ODBmNmFkIiwidXNlcl9pZCI6IjYifQ.Th67MwP8N-MQ7fvs_Dcj9TB51Y0aclfr9JnUkLUjD_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"workout_plan_id\": 2,\n    \"member_id\": 5,\n    \"status\": \"pending\",\n    \"due_date\": \"2026-01-25\"\n}\n// Authorization: Bearer <trainer_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}workouts/tasks/",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Assign Task to Member (Trainer Only)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"workout_plan_id\": 2,\n    \"member_id\": 5,\n    \"status\": \"pending\",\n    \"due_date\": \"2026-01-25\"\n}\n// Authorization: Bearer <trainer_token>",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}workouts/tasks/",
+									"host": [
+										"{{url}}workouts"
+									],
+									"path": [
+										"tasks",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 15 Jan 2026 15:15:00 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.14.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, GET, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "512"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Workout task assigned successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"workout_plan\": {\n            \"id\": 2,\n            \"title\": \"Strength Training\",\n            \"description\": \"4-week program\",\n            \"created_by\": {\n                \"id\": 6,\n                \"email\": \"trainer@gym.com\"\n            },\n            \"gym_branch\": {\n                \"id\": 1,\n                \"name\": \"Downtown Fitness\",\n                \"location\": \"123 Main Street, New York\",\n                \"created_at\": \"2026-01-15T14:53:52.791227Z\"\n            },\n            \"created_at\": \"2026-01-15T15:14:27.927706Z\"\n        },\n        \"member\": {\n            \"id\": 5,\n            \"email\": \"member@gym.com\"\n        },\n        \"status\": \"pending\",\n        \"due_date\": \"2026-01-25\",\n        \"created_at\": \"2026-01-15T15:15:00.924058Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "List Tasks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Authorization: Bearer <any_authenticated_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}workouts/tasks/",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task Status (Trainer or Task Owner)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"in_progress\"\n}\n// Authorization: Bearer <trainer_or_member_token>",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}workouts/tasks/1/",
+							"host": [
+								"{{url}}workouts"
+							],
+							"path": [
+								"tasks",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": ""
+		},
+		{
+			"key": "admin_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc3MDQzLCJpYXQiOjE3Njg0OTA2NDMsImp0aSI6Ijk4MzU5MTA0MGViNDRhZDNiZDQ5OWZjMzhiOWYyMmM4IiwidXNlcl9pZCI6IjEifQ.thdR870Fc3ldpewKs86qYXqMkO_NClQkUEx8ZIR-ogQ"
+		},
+		{
+			"key": "manager_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc2OTMyLCJpYXQiOjE3Njg0OTA1MzIsImp0aSI6IjVlYjVkNGQ2NTlkMDRjZDRiZTVhNzZkNjQyNTFiNzBjIiwidXNlcl9pZCI6IjMifQ.PdgAoLkZyQakpv-jVWNmbmit1f61-VlQKDNMWWzKlHw"
+		},
+		{
+			"key": "trainer_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc2ODk5LCJpYXQiOjE3Njg0OTA0OTksImp0aSI6IjA2NTQ0Y2Y1YThmMDQ4ZGNhOWFhMDQxM2ZiYjY4OTc5IiwidXNlcl9pZCI6IjYifQ.nVDSROi9G3mAfZ1vQzVzo1LeCZNcc9bzjSlrUaE06XM"
+		},
+		{
+			"key": "member_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc2OTU2LCJpYXQiOjE3Njg0OTA1NTYsImp0aSI6IjAwZjU1ZDRhNjgzZDRhZmY4YmZkNjkxNTZlNjI2M2I3IiwidXNlcl9pZCI6IjUifQ.GLgl0tPlDXlxb6NPw4MM0_v-imjFx8v3oj1qhzun17M"
+		}
+	]
+}
